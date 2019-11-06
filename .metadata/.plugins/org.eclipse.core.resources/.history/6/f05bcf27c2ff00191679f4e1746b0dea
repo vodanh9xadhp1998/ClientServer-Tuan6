@@ -1,0 +1,65 @@
+package FileServer;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.io.Serializable;
+
+public class Lecturer extends Person implements Serializable{
+	private int lecturerID;
+	private ArrayList<Subject> subject;
+	
+	public Lecturer()
+	{
+		super("",0);
+		this.setLecturerID(0);
+		this.setSubject(new ArrayList<Subject>());
+	}
+	public Lecturer(String name, int age , int LID)
+	{
+		super(name,age);
+		this.setLecturerID(LID);
+		this.setSubject(new ArrayList<Subject>());
+	}
+	public int getLecturerID() {
+		return lecturerID;
+	}
+	public void setLecturerID(int lecturerID) {
+		this.lecturerID = lecturerID;
+	}
+	public ArrayList<Subject> getSubject() {
+		return subject;
+	}
+	public void setSubject(ArrayList<Subject> subject) {
+		this.subject = subject;
+	}
+	public void InputSubject()
+	{
+		Scanner sc = new Scanner(System.in);
+		int kt = 1;
+		while(kt!=0) 
+		{
+			System.out.print("Mon Hoc: ");
+			String str = sc.next();
+			subject.add(new Subject(str,0));
+			System.out.print("Ban co muon nhap them mon hoc khong..?\n(1)Co (0)Khong: ");
+			kt = sc.nextInt();
+		}
+	}
+	public void InputLecturer()
+	{
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Nhap LecturerID: ");
+		this.lecturerID = sc.nextInt();
+		super.InputPerson();
+		InputSubject();
+	}
+	public void OutputLecturer()
+	{
+		System.out.print("ID: "+this.lecturerID+"\t");
+		super.OutputPerson();
+		for (Subject i : subject) 
+			{
+				i.OutputSubject();
+			}
+	}
+}

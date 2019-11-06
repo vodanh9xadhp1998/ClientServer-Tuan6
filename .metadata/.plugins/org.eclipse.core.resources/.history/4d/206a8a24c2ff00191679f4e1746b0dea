@@ -1,0 +1,74 @@
+package FileServer;
+
+import java.io.*;
+import java.util.ArrayList;
+public class ActionFile {
+	public void SaveFileStudent(ArrayList<Student> student, String FileName)
+	{
+		try
+		{
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FileName));
+			oos.writeObject(student);
+			oos.close();
+			System.out.print("Ghi File Student thanh cong..!");
+		}
+		catch(IOException ex)
+		{
+			 ex.printStackTrace();
+		}
+	}
+	public ArrayList LoadFileStudent(String FileName)
+	{
+		try
+		{
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FileName));
+			ArrayList<Student> student = null;
+			student = (ArrayList<Student>) ois.readObject();
+			return student;
+		}
+		catch (IOException ex) 
+		{
+			System.out.println("Error Read file");
+			return null;
+        } 
+		catch (ClassNotFoundException ex) 
+		{
+			System.out.println("Class not found");
+			return null;
+		}
+	}
+	public void SaveFileLecturer(ArrayList<Lecturer> lecturer, String FileName)
+	{
+		try
+		{
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FileName));
+			oos.writeObject(lecturer);
+			oos.close();
+			System.out.print("Ghi File Lecturer thanh cong..!");
+		}
+		catch(IOException ex)
+		{
+			System.out.println("Error Save file");
+		}
+	}
+	public ArrayList LoadFileLecturer(String FileName)
+	{
+		try
+		{
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FileName));
+			ArrayList<Lecturer> lecturer = null;
+			lecturer = (ArrayList<Lecturer>) ois.readObject();
+			return lecturer;
+		}
+		catch (IOException ex) 
+		{
+			System.out.println("Error Read file");
+			return null;
+        } 
+		catch (ClassNotFoundException ex) 
+		{
+			System.out.println("Class not found");
+			return null;
+		}
+	}
+}

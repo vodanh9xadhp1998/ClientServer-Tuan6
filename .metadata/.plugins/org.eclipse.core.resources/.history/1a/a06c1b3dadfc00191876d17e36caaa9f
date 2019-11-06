@@ -1,0 +1,78 @@
+package FileServer;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Scanner;
+import java.io.*;
+
+class MarkComparator implements Comparator<Student>
+{
+	public int compare(Student s1, Student s2) 
+	{
+		if(s1.getMarkavge()>s2.getMarkavge())
+			return 1;
+		return 0;
+	}
+	
+}
+public class Run {
+	public static void InputData(ArrayList<Lecturer> lectures, ArrayList<Student> students) {
+		int n;
+		Scanner sc = new Scanner(System.in);
+		do {
+			System.out.print(
+					"Ban co muon nhap them khong..?\n(1)Nhap giang vien:\n(2)Nhap sinh vien:\n(0)Thoat:\nMoi ban chon: ");
+			n = sc.nextInt();
+			if (n == 1) {
+				Lecturer lecture = new Lecturer();
+				lecture.InputLecturer();
+				lectures.add(lecture);
+			}
+			if (n == 2) {
+				Student student = new Student();
+				student.InputStudent();
+				students.add(student);
+			}
+		} while (n != 0);
+	}
+
+	public static void main(String[] args) {
+		ArrayList<Lecturer> lectures = new ArrayList<Lecturer>();
+		ArrayList<Student> students = new ArrayList<Student>();
+		ActionFile AF = new ActionFile();
+		Scanner sc = new Scanner(System.in);
+		System.out.print("(1)Lay du lieu tư File\n(2)Nhap du lieu\nMoi ban chon: ");
+		int kt = sc.nextInt();
+		if (kt == 1) {
+			students = AF.LoadFileStudent("DataStudent.dat");
+			lectures = AF.LoadFileLecturer("DataLecturer.dat");
+			System.out.print("Ban co muon ghi them thong tin khong?\n(1)Co:\n(2)Khong:\nMoi ban chon:  ");
+			int ktt = sc.nextInt();
+			if (ktt == 1) {
+				InputData(lectures, students);
+			}
+		} else {
+			InputData(lectures, students);
+		}
+		System.out.println("Thong tin ban vua nhap..!\n");
+		System.out.println("Thong tin giang vien..!");
+		for (Lecturer i : lectures) {
+			i.OutputLecturer();
+			System.out.print("\n");
+		}
+		System.out.println("Thong tin sinh vien..!");
+		Collections.sort(students, new MarkComparator());
+		for (Student i : students) {
+			i.OutputStudent();
+		}
+		System.out.print("Ban co muon xuat danh sach ra file khong..?\n(1)Co:\n(2)Khong::\nMoi ban chon: ");
+		int file = sc.nextInt();
+		if (file == 1) {
+			AF.SaveFileLecturer(lectures, "DataLecturer.dat");
+			AF.SaveFileStudent(students, "DataStudent.dat");
+		} else
+			System.exit(0);
+	}
+
+}
